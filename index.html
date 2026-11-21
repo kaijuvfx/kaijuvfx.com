@@ -3,223 +3,401 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kaiju Alert | Production Creature Assets & Maya Tools</title>
+    <title>KaijuVFX | Solo Creature VFX</title>
+    <meta name="description" content="KaijuVFX is a solo creature VFX studio building production creature shots, multi-DCC OpenUSD pipelines, and open-source artist tools in public across Maya, Houdini, and Unreal Engine 5.">
+    <link rel="icon" type="image/png" href="logo/kaiju_v4.png">
+
+    <!-- Open Graph / Social Preview -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.kaijuvfx.com/">
+    <meta property="og:title" content="KaijuVFX | Solo Creature VFX">
+    <meta property="og:description" content="Solo creature VFX: production creature showcases, tutorials, behind-the-scenes pipeline devlogs, and open-source VFX tools.">
+    <meta property="og:image" content="https://www.kaijuvfx.com/logo/kaiju_v4.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="KaijuVFX | Solo Creature VFX">
+    <meta name="twitter:description" content="Solo creature VFX: production creature showcases, tutorials, behind-the-scenes pipeline devlogs, and open-source VFX tools.">
+    <meta name="twitter:image" content="https://www.kaijuvfx.com/logo/kaiju_v4.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                        display: ['Space Grotesk', 'Inter', 'ui-sans-serif', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+                    },
+                    colors: {
+                        obsidian: '#060608',
+                        carbon: '#0e0e13',
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        body { background-color: #0d0d0e; color: #e5e7eb; }
-        .glass-card { background: rgba(22, 22, 26, 0.7); border: 1px solid rgba(255, 255, 255, 0.07); backdrop-filter: blur(12px); }
-        .glass-card:hover { border-color: rgba(82, 82, 91, 0.5); }
-        .amber-glow { text-shadow: 0 0 25px rgba(245, 158, 11, 0.25); }
+        html, body {
+            background-color: #060608;
+            color: #e4e4e7;
+        }
+        .studio-nav {
+            background: rgba(6, 6, 8, 0.84);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        .studio-card {
+            background: linear-gradient(180deg, rgba(18, 18, 24, 0.92) 0%, rgba(11, 11, 15, 0.96) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .studio-card:hover {
+            border-color: rgba(245, 158, 11, 0.35);
+            box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.85), 0 0 32px -16px rgba(245, 158, 11, 0.18);
+        }
+        .hero-grid-bg {
+            background-image:
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 64px 64px;
+            mask-image: radial-gradient(ellipse 80% 70% at 50% 35%, #000 35%, transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 35%, #000 35%, transparent 100%);
+        }
+        .amber-text-glow {
+            text-shadow: 0 0 32px rgba(245, 158, 11, 0.25);
+        }
     </style>
 </head>
-<body class="font-sans antialiased selection:bg-amber-500/30 selection:text-amber-200">
+<body class="font-sans antialiased selection:bg-amber-500/30 selection:text-amber-200 overflow-x-hidden">
 
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 glass-card px-6 py-4 flex justify-between items-center border-b border-white/5">
-        <div class="flex items-center space-x-6">
-            <a href="https://www.kaijuvfx.com/" class="text-2xl font-extrabold text-amber-500 tracking-wider hover:text-zinc-600 transition-colors duration-200">KAIJU ALERT</a>
-            
-            <!-- Top Social & Store Icons -->
-            <div class="hidden sm:flex items-center space-x-4 text-gray-400 border-l border-zinc-800 pl-6">
-                <!-- ArtStation -->
-                <a href="https://www.artstation.com/kaijuvfx" target="_blank" rel="noopener noreferrer" title="ArtStation" class="hover:text-amber-500 transition-colors">
-                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M0 17.7l2.9 5.3h18.2l-3.5-6.3zm18.3-9.4L12 18.2 5.7 8.3zM12 0L2.9 16.1h4.9l4.2-7.2 4.2 7.2h4.9z"/></svg>
-                </a>
-                <!-- Instagram -->
-                <a href="https://www.instagram.com/kaiju_vfx/" target="_blank" rel="noopener noreferrer" title="Instagram" class="hover:text-amber-500 transition-colors">
-                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                </a>
-                <!-- Gumroad -->
-                <a href="https://kaijuvfx.gumroad.com/" target="_blank" rel="noopener noreferrer" title="Gumroad Store" class="hover:text-amber-500 transition-colors">
-                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.44.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.04.64.09.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c-.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.99 0-3.6-1.61-3.6-3.6s1.61-3.6 3.6-3.6 3.6 1.61 3.6 3.6-1.61 3.6-3.6-3.6z"/></svg>
-                </a>
-                <!-- X (Twitter) -->
-                <a href="https://x.com/kaiju_vfx" target="_blank" rel="noopener noreferrer" title="X (Twitter)" class="hover:text-amber-500 transition-colors">
-                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                </a>
+    <!-- Fixed Navigation -->
+    <nav class="fixed top-0 inset-x-0 z-50 studio-nav border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between gap-4">
+            <!-- Brand -->
+            <a href="https://www.kaijuvfx.com/" class="flex items-center gap-3 group shrink-0">
+                <img src="logo/kaiju_v4.png" alt="KaijuVFX emblem" class="h-10 w-10 rounded-lg bg-black border border-white/15 object-contain p-0.5 group-hover:border-amber-500/50 transition-colors">
+                <span class="font-display text-lg sm:text-xl font-bold tracking-wider text-zinc-100">
+                    KAIJU<span class="text-amber-500">VFX</span>
+                </span>
+            </a>
+
+            <!-- Section Links -->
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-400">
+                <a href="#showcase" class="hover:text-zinc-100 transition-colors">Showcase</a>
+                <a href="#tools" class="hover:text-zinc-100 transition-colors">Tools</a>
+                <a href="#youtube" class="hover:text-zinc-100 transition-colors">YouTube</a>
+            </div>
+
+            <!-- Compact Social Icon Row -->
+            <div class="flex items-center gap-3.5 text-zinc-400">
                 <!-- YouTube -->
-                <a href="https://www.youtube.com/@kaiju_vfx" target="_blank" rel="noopener noreferrer" title="YouTube" class="hover:text-amber-500 transition-colors">
+                <a href="https://www.youtube.com/@kaiju_vfx" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube" class="hover:text-amber-400 transition-colors p-1">
                     <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                 </a>
                 <!-- GitHub -->
-                <a href="https://github.com/kaijuvfx" target="_blank" rel="noopener noreferrer" title="GitHub" class="hover:text-amber-500 transition-colors">
+                <a href="https://github.com/kaijuvfx" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub" class="hover:text-amber-400 transition-colors p-1">
                     <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
                 </a>
+                <!-- ArtStation -->
+                <a href="https://www.artstation.com/kaijuvfx" target="_blank" rel="noopener noreferrer" title="ArtStation" aria-label="ArtStation" class="hover:text-amber-400 transition-colors p-1">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M0 17.7l2.9 5.3h18.2l-3.5-6.3zm18.3-9.4L12 18.2 5.7 8.3zM12 0L2.9 16.1h4.9l4.2-7.2 4.2 7.2h4.9z"/></svg>
+                </a>
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/kaiju_vfx/" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Instagram" class="hidden sm:inline-flex hover:text-amber-400 transition-colors p-1">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </a>
+                <!-- X (Twitter) -->
+                <a href="https://x.com/kaiju_vfx" target="_blank" rel="noopener noreferrer" title="X (Twitter)" aria-label="X (Twitter)" class="hidden sm:inline-flex hover:text-amber-400 transition-colors p-1">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+                <!-- Gumroad -->
+                <a href="https://kaijuvfx.gumroad.com/" target="_blank" rel="noopener noreferrer" title="Gumroad" aria-label="Gumroad" class="hidden sm:inline-flex hover:text-amber-400 transition-colors p-1">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 9.8 12h-9.8v-3.5h12.8A10.02 10.02 0 0 0 12 2Zm-1.5 14.5a4.5 4.5 0 1 1 3.7-7.1l2.8-2.1A8 8 0 1 0 12 20a7.8 7.8 0 0 0 7.6-5.5h-4.1a4.5 4.5 0 0 1-5 2Z"/></svg>
+                </a>
             </div>
-        </div>
-
-        <div class="space-x-6 text-sm font-medium hidden md:block text-gray-300">
-            <a href="#showcase" class="hover:text-zinc-500 transition-colors">Featuring</a>
-            <a href="#assets" class="hover:text-zinc-500 transition-colors">Asset Store</a>
-            <a href="#tools" class="hover:text-zinc-500 transition-colors">Free Tools</a>
-            <a href="#courses" class="hover:text-zinc-500 transition-colors">Behind the Scene</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <header class="relative pt-36 pb-24 px-6 flex flex-col items-center text-center border-b border-zinc-800/80">
-        <div class="absolute inset-0 bg-gradient-to-b from-amber-500/5 via-transparent to-transparent pointer-events-none"></div>
-        <h1 class="text-6xl sm:text-8xl md:text-9xl font-black mb-6 tracking-tight leading-none text-zinc-100">
-            Creatures.<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 amber-glow">Assemble.</span>
-        </h1>
-        <p class="text-lg md:text-2xl text-zinc-400 max-w-3xl mb-10 leading-relaxed font-normal">
-            Production-ready 3D creature assets, open source Maya tool, and workflow breakdowns for game developers, riggers, and VFX artists.
-        </p>
-        <div class="flex space-x-4">
-            <a href="https://kaijuvfx.gumroad.com/" target="_blank" rel="noopener noreferrer" class="bg-amber-500 hover:bg-zinc-700 hover:text-amber-400 text-zinc-950 px-8 py-3.5 rounded-lg font-bold shadow-lg shadow-amber-500/10 transition-all hover:scale-[1.02]">Visit Gumroad Store</a>
-            <a href="#tools" class="bg-amber-500 hover:bg-zinc-700 hover:text-amber-400 text-zinc-950 px-8 py-3.5 rounded-lg font-bold shadow-lg shadow-amber-500/10 transition-all hover:scale-[1.02]">Free Maya Tools</a>
+    <header class="relative pt-28 pb-16 sm:pt-36 sm:pb-24 px-5 sm:px-8 border-b border-white/10 overflow-hidden">
+        <div class="absolute inset-0 hero-grid-bg pointer-events-none"></div>
+        <div class="absolute -top-32 left-1/3 -translate-x-1/2 w-[780px] h-[420px] bg-gradient-to-r from-red-600/10 via-amber-500/10 to-transparent blur-3xl rounded-full pointer-events-none"></div>
+
+        <div class="relative max-w-7xl mx-auto">
+            <div class="max-w-4xl text-left">
+                <div class="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/10 mb-6">
+                    <span class="w-2 h-2 rounded-full bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.9)]"></span>
+                    <span class="font-mono text-xs tracking-widest uppercase text-zinc-300">KaijuVFX // Built in Public</span>
+                </div>
+
+                <h1 class="font-display text-4xl sm:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.04] text-zinc-100 mb-6">
+                    Solo <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-500 to-orange-500 amber-text-glow">Creature VFX.</span>
+                </h1>
+
+                <p class="text-base sm:text-xl text-zinc-400 max-w-2xl leading-relaxed mb-8">
+                    Production creature VFX, custom multi-DCC pipelines, and open-source artist tools &mdash; built solo and shared in public across Maya, Houdini, OpenUSD, and Unreal Engine.
+                </p>
+
+                <!-- Stack Chips -->
+                <div class="flex flex-wrap gap-2 mb-10">
+                    <span class="font-mono text-xs px-3 py-1.5 rounded-md bg-zinc-900/90 border border-white/10 text-zinc-300">MAYA 2026</span>
+                    <span class="font-mono text-xs px-3 py-1.5 rounded-md bg-zinc-900/90 border border-white/10 text-zinc-300">HOUDINI 21</span>
+                    <span class="font-mono text-xs px-3 py-1.5 rounded-md bg-zinc-900/90 border border-white/10 text-zinc-300">OPENUSD</span>
+                    <span class="font-mono text-xs px-3 py-1.5 rounded-md bg-zinc-900/90 border border-white/10 text-zinc-300">UNREAL ENGINE 5</span>
+                    <span class="font-mono text-xs px-3 py-1.5 rounded-md bg-red-950/40 border border-red-500/25 text-amber-300">AI / AGENTIC PIPELINES</span>
+                </div>
+
+                <!-- CTAs -->
+                <div class="flex flex-wrap items-center gap-4">
+                    <a href="https://www.youtube.com/@kaiju_vfx" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2.5 bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold px-7 py-3.5 rounded-xl shadow-lg shadow-amber-500/15 transition-all hover:-translate-y-0.5">
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        Watch on YouTube
+                    </a>
+                    <a href="#tools" class="inline-flex items-center gap-2 bg-zinc-900/90 hover:bg-zinc-800 text-zinc-100 font-semibold px-7 py-3.5 rounded-xl border border-white/15 hover:border-amber-500/40 transition-all">
+                        Explore Studio Tools &rarr;
+                    </a>
+                </div>
+            </div>
         </div>
     </header>
 
-    <!-- Featuring Section -->
-    <section id="showcase" class="py-20 px-6 max-w-7xl mx-auto">
-        <div class="flex justify-between items-center mb-10">
-            <h2 class="text-3xl font-bold border-l-4 border-amber-500 pl-4 text-zinc-100">Featuring</h2>
-            <a href="https://www.youtube.com/@kaiju_vfx" target="_blank" rel="noopener noreferrer" class="text-amber-500 hover:text-zinc-500 text-sm font-semibold transition-colors">View All on YouTube &rarr;</a>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="aspect-video bg-zinc-900/80 rounded-xl overflow-hidden border border-zinc-800/80 shadow-md">
-                <iframe class="w-full h-full" src="https://www.youtube.com/embed/GbiOoq3vVw0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <!-- Featured Showcase -->
+    <section id="showcase" class="py-20 sm:py-24 px-5 sm:px-8 max-w-7xl mx-auto">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+            <div>
+                <span class="font-mono text-xs uppercase tracking-widest text-amber-400">01 // Featured Study</span>
+                <h2 class="font-display text-3xl sm:text-4xl font-bold text-zinc-100 mt-2">Featured Showcase</h2>
             </div>
-            <div class="aspect-video bg-zinc-900/50 rounded-xl overflow-hidden border border-zinc-800/80 flex items-center justify-center text-zinc-500 text-sm font-medium">
-                YouTube Embed: Process Timelapse
+            <a href="https://www.youtube.com/@kaiju_vfx" target="_blank" rel="noopener noreferrer" class="font-mono text-xs uppercase tracking-wider text-amber-400 hover:text-amber-300 transition-colors shrink-0 whitespace-nowrap">
+                All Videos on YouTube &rarr;
+            </a>
+        </div>
+
+        <div class="studio-card rounded-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-12">
+            <div class="lg:col-span-8 aspect-video bg-black border-b lg:border-b-0 lg:border-r border-white/10">
+                <iframe class="w-full h-full" src="https://www.youtube.com/embed/GbiOoq3vVw0" title="Creature Technical Study: Rajang - KaijuVFX" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <div class="lg:col-span-4 p-6 sm:p-8 flex flex-col justify-between gap-6">
+                <div>
+                    <div class="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider text-red-400 bg-red-950/40 border border-red-500/25 px-2.5 py-1 rounded-md mb-4">
+                        Creature Technical Study
+                    </div>
+                    <h3 class="font-display text-2xl font-bold text-zinc-100 mb-3">Creature Technical Study: Rajang</h3>
+                    <p class="text-sm sm:text-base text-zinc-400 leading-relaxed mb-6">
+                        Real production creature work built to stress-test custom rigging, deformation, groom, and lookdev workflows in public &mdash; every bottleneck feeds directly back into the KaijuVFX toolkit.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="font-mono text-[11px] px-2.5 py-1 rounded bg-white/[0.04] border border-white/10 text-zinc-300">Rigging</span>
+                        <span class="font-mono text-[11px] px-2.5 py-1 rounded bg-white/[0.04] border border-white/10 text-zinc-300">Deformation</span>
+                        <span class="font-mono text-[11px] px-2.5 py-1 rounded bg-white/[0.04] border border-white/10 text-zinc-300">Lookdev</span>
+                    </div>
+                </div>
+                <div class="pt-5 border-t border-white/10">
+                    <a href="https://www.youtube.com/@kaiju_vfx" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm font-bold text-amber-400 hover:text-amber-300 transition-colors">
+                        Follow the Channel on YouTube &rarr;
+                    </a>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Digital Asset Storefront -->
-    <section id="assets" class="py-20 px-6 max-w-7xl mx-auto bg-zinc-900/30 rounded-3xl border border-zinc-800/50">
-        <div class="flex justify-between items-center mb-10">
-            <h2 class="text-3xl font-bold border-l-4 border-amber-500 pl-4 text-zinc-100">Asset Store</h2>
-            <a href="https://kaijuvfx.gumroad.com/" target="_blank" rel="noopener noreferrer" class="text-amber-500 hover:text-zinc-500 text-sm font-semibold transition-colors">View All on Gumroad &rarr;</a>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Product Card 1 -->
-            <div class="glass-card rounded-xl p-6 flex flex-col justify-between transition-all">
+    <!-- Studio Toolkit -->
+    <section id="tools" class="py-20 sm:py-24 px-5 sm:px-8 border-y border-white/10 bg-zinc-950/50">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
                 <div>
-                    <div class="w-full h-48 bg-zinc-900 rounded-lg mb-5 flex items-center justify-center text-zinc-500 text-sm border border-zinc-800/50">[Image: High-Poly Creature]</div>
-                    <div class="text-xs text-amber-400 font-semibold mb-1.5 uppercase tracking-wide">Cinematic Mesh / Fully Rigged</div>
-                    <h3 class="text-xl font-bold mb-2 text-zinc-100">Abyssal Leviathan</h3>
-                    <p class="text-zinc-400 text-sm mb-6 leading-relaxed">Fully rigged cinematic creature model with 4K textures.</p>
+                    <span class="font-mono text-xs uppercase tracking-widest text-amber-400">02 // Production Software</span>
+                    <h2 class="font-display text-3xl sm:text-4xl font-bold text-zinc-100 mt-2">Studio Toolkit</h2>
+                    <p class="text-zinc-400 mt-2 max-w-2xl text-sm sm:text-base">
+                        Production tools extracted directly from solo creature work. Start using Kaiju Suite today &mdash; the rest of the pipeline unlocks alongside upcoming breakdowns.
+                    </p>
                 </div>
-                <a href="https://kaijuvfx.gumroad.com/" target="_blank" rel="noopener noreferrer" class="block text-center w-full bg-amber-500 hover:bg-zinc-700 hover:text-amber-400 text-zinc-950 font-bold py-2.5 rounded-lg transition-colors shadow-sm">Buy on Gumroad</a>
+                <a href="https://github.com/kaijuvfx" target="_blank" rel="noopener noreferrer" class="font-mono text-xs uppercase tracking-wider text-amber-400 hover:text-amber-300 transition-colors shrink-0 whitespace-nowrap">
+                    github.com/kaijuvfx &rarr;
+                </a>
             </div>
-            <!-- Product Card 2 -->
-            <div class="glass-card rounded-xl p-6 flex flex-col justify-between transition-all">
-                <div>
-                    <div class="w-full h-48 bg-zinc-900 rounded-lg mb-5 flex items-center justify-center text-zinc-500 text-sm border border-zinc-800/50">[Image: Low-Poly Pack]</div>
-                    <div class="text-xs text-amber-400 font-semibold mb-1.5 uppercase tracking-wide">Game-Ready / Optimized Topology</div>
-                    <h3 class="text-xl font-bold mb-2 text-zinc-100">Mutant Swarm Pack</h3>
-                    <p class="text-zinc-400 text-sm mb-6 leading-relaxed">Optimized creature pack for mobile and indie game devs.</p>
-                </div>
-                <a href="https://kaijuvfx.gumroad.com/" target="_blank" rel="noopener noreferrer" class="block text-center w-full bg-amber-500 hover:bg-zinc-700 hover:text-amber-400 text-zinc-950 font-bold py-2.5 rounded-lg transition-colors shadow-sm">Buy on Gumroad</a>
-            </div>
-            <!-- Product Card 3 -->
-            <div class="glass-card rounded-xl p-6 flex flex-col justify-between transition-all">
-                <div>
-                    <div class="w-full h-48 bg-zinc-900 rounded-lg mb-5 flex items-center justify-center text-zinc-500 text-sm border border-zinc-800/50">[Image: Texture Pack]</div>
-                    <div class="text-xs text-amber-400 font-semibold mb-1.5 uppercase tracking-wide">Procedural Shaders & Maps</div>
-                    <h3 class="text-xl font-bold mb-2 text-zinc-100">Organic Flesh Shaders</h3>
-                    <p class="text-zinc-400 text-sm mb-6 leading-relaxed">Procedural skin and scale shaders for Blender & Unreal.</p>
-                </div>
-                <a href="https://kaijuvfx.gumroad.com/" target="_blank" rel="noopener noreferrer" class="block text-center w-full bg-amber-500 hover:bg-zinc-700 hover:text-amber-400 text-zinc-950 font-bold py-2.5 rounded-lg transition-colors shadow-sm">Buy on Gumroad</a>
-            </div>
-        </div>
-    </section>
 
-    <!-- Free Tools, Stay Kaiju Alert & Behind the Scene Grid -->
-    <section class="py-20 px-6 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
-        
-        <!-- Column 1 (Free Tools on Mobile & Desktop) -->
-        <div class="flex flex-col space-y-16 order-1">
-            <!-- Free Tools -->
-            <div id="tools">
-                <h2 class="text-3xl font-bold mb-8 border-l-4 border-amber-500 pl-4 text-zinc-100">Free Tools</h2>
-                <div class="space-y-4">
-                    <div class="glass-card p-6 rounded-xl flex justify-between items-center transition-all">
-                        <div>
-                            <h4 class="font-bold text-base text-zinc-100">Kaiju Suite</h4>
-                            <p class="text-sm text-zinc-400 mt-1">Open-source Maya tools, modular scripts, and pipeline helpers for creature assembly.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Tool 1: Kaiju Suite (Public MIT) -->
+                <article class="studio-card rounded-2xl p-7 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-start justify-between gap-4 mb-4">
+                            <h3 class="font-display text-2xl font-bold text-zinc-100">Kaiju Suite</h3>
+                            <span class="font-mono text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-md bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 shrink-0">
+                                OPEN SOURCE &middot; MIT
+                            </span>
                         </div>
-                        <a href="https://github.com/adamfok/kaiju_suite" target="_blank" rel="noopener noreferrer" class="bg-zinc-800 hover:bg-zinc-700 text-zinc-200 px-4 py-2 rounded-lg text-sm font-semibold transition-colors ml-4 shrink-0">GitHub</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Desktop Newsletter Container (Hidden on Mobile) -->
-            <div class="hidden md:block">
-                <div id="newsletter-desktop">
-                    <h2 class="text-3xl font-bold mb-8 border-l-4 border-amber-500 pl-4 text-zinc-100">Stay Kaiju Alert</h2>
-                    <div class="glass-card p-6 rounded-xl border border-zinc-800/80">
-                        <script src="https://f.convertkit.com/ckjs/ck.5.js"></script>
-                        <form action="https://app.kit.com/forms/10055938/subscriptions" class="seva-form formkit-form" method="post" data-sv-form="10055938" data-uid="d7fd59e381" data-format="inline" data-version="5" data-options="{&quot;settings&quot;:{&quot;after_subscribe&quot;:{&quot;action&quot;:&quot;message&quot;,&quot;success_message&quot;:&quot;Success! Now check your email to confirm your subscription.&quot;,&quot;redirect_url&quot;:&quot;&quot;},&quot;analytics&quot;:{&quot;google&quot;:null,&quot;fathom&quot;:null,&quot;facebook&quot;:null,&quot;segment&quot;:null,&quot;pinterest&quot;:null,&quot;sparkloop&quot;:null,&quot;googletagmanager&quot;:null},&quot;modal&quot;:{&quot;trigger&quot;:&quot;timer&quot;,&quot;scroll_percentage&quot;:null,&quot;timer&quot;:5,&quot;devices&quot;:&quot;all&quot;,&quot;show_once_every&quot;:15},&quot;powered_by&quot;:{&quot;show&quot;:true,&quot;url&quot;:&quot;https://kit.com/features/forms?utm_campaign=poweredby&amp;utm_content=form&amp;utm_medium=referral&amp;utm_source=dynamic&quot;},&quot;recaptcha&quot;:{&quot;enabled&quot;:false},&quot;return_visitor&quot;:{&quot;action&quot;:&quot;show&quot;,&quot;custom_content&quot;:&quot;&quot;},&quot;slide_in&quot;:{&quot;display_in&quot;:&quot;bottom_right&quot;,&quot;trigger&quot;:&quot;timer&quot;,&quot;scroll_percentage&quot;:null,&quot;timer&quot;:5,&quot;devices&quot;:&quot;all&quot;,&quot;show_once_every&quot;:15},&quot;sticky_bar&quot;:{&quot;display_in&quot;:&quot;top&quot;,&quot;trigger&quot;:&quot;timer&quot;,&quot;scroll_percentage&quot;:null,&quot;timer&quot;:5,&quot;devices&quot;:&quot;all&quot;,&quot;show_once_every&quot;:15}},&quot;version&quot;:&quot;5&quot;}" min-width="400 500 600 700 800" style="background-color: transparent; border-radius: 0px; max-width: 100%; border: none;">
-                            <div class="formkit-background" style="opacity: 0;"></div>
-                            <div data-style="minimal" style="padding: 0;">
-                                <div class="formkit-subheader" data-element="subheader" style="color: rgb(161, 161, 170); font-size: 14px; margin: 0 0 16px 0; text-align: left;"><p>Receive notifications when new creature assets, Maya tools, or course modules are released.</p></div>
-                                <ul class="formkit-alert formkit-alert-error" data-element="errors" data-group="alert"></ul>
-                                <div data-element="fields" data-stacked="false" class="seva-fields formkit-fields" style="display: flex; flex-direction: row; gap: 8px; margin: 0; width: 100%;">
-                                    <div class="formkit-field" style="flex: 1 1 auto; width: 100%; min-width: 0; margin: 0;"><input class="formkit-input" name="email_address" aria-label="Email Address" placeholder="Enter your email" required="" type="email" style="color: rgb(244, 244, 245); background-color: rgb(18, 18, 20); border-color: rgb(39, 39, 42); border-radius: 8px; font-weight: 400; height: 42px; width: 100%; padding: 0 14px;"></div>
-                                    <button data-element="submit" class="formkit-submit formkit-submit" style="color: rgb(9, 9, 11); background-color: rgb(245, 158, 11); border-radius: 8px; font-weight: 700; height: 42px; padding: 0 20px; margin: 0; white-space: nowrap; flex-shrink: 0;"><div class="formkit-spinner"><div></div><div></div><div></div></div><span class="">Subscribe</span></button>
-                                </div>
-                                <div class="formkit-guarantee" data-element="guarantee" style="color: rgb(113, 113, 122); font-size: 12px; font-weight: 400; margin: 12px 0 0 0; text-align: left;"><p>We won't send you spam. Unsubscribe at any time.</p></div>
-                            </div>
-                            <style>
-                                .formkit-form[data-uid="d7fd59e381"] * { box-sizing: border-box; }
-                                .formkit-form[data-uid="d7fd59e381"] .formkit-input:focus { outline: none; border-color: rgb(245, 158, 11); }
-                                .formkit-form[data-uid="d7fd59e381"] .formkit-submit:hover { background-color: rgb(63, 63, 70) !important; color: rgb(245, 158, 11) !important; }
-                            </style>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Column 2 (Behind the Scene on Mobile & Desktop) -->
-        <div id="courses" class="order-2 flex flex-col h-full">
-            <h2 class="text-3xl font-bold mb-8 border-l-4 border-amber-500 pl-4 text-zinc-100">Behind the Scene</h2>
-            <div class="glass-card rounded-xl overflow-hidden flex-1 flex flex-col justify-between border border-zinc-800/80">
-                <div class="h-48 bg-zinc-900 flex items-center justify-center text-zinc-500 text-sm border-b border-zinc-800/50">[Course Banner Image]</div>
-                <div class="p-6 flex flex-col justify-between flex-1">
-                    <div>
-                        <h3 class="text-xl font-bold mb-2 text-zinc-100">Advanced Creature Workflows</h3>
-                        <p class="text-zinc-400 text-sm mb-6 leading-relaxed">Mastering everything from beginner monster sculpting to advanced texturing, rigging, and animation.</p>
-                    </div>
-                    <div>
-                        <a href="https://www.youtube.com/@kaiju_vfx" target="_blank" rel="noopener noreferrer" class="text-amber-500 hover:text-zinc-500 font-bold text-sm inline-block transition-colors">Watch Now &rarr;</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mobile Newsletter Container (Visible on Mobile only, strictly at the bottom) -->
-        <div id="newsletter-mobile" class="order-3 md:hidden">
-            <h2 class="text-3xl font-bold mb-8 border-l-4 border-amber-500 pl-4 text-zinc-100">Stay Kaiju Alert</h2>
-            <div class="glass-card p-6 rounded-xl border border-zinc-800/80">
-                <form action="https://app.kit.com/forms/10055938/subscriptions" class="seva-form formkit-form" method="post" data-sv-form="10055938" data-uid="d7fd59e381" data-format="inline" data-version="5" style="background-color: transparent; border-radius: 0px; max-width: 100%; border: none;">
-                    <div data-style="minimal" style="padding: 0;">
-                        <div class="formkit-subheader" data-element="subheader" style="color: rgb(161, 161, 170); font-size: 14px; margin: 0 0 16px 0; text-align: left;"><p>Receive notifications when new creature assets, Maya tools, or course modules are released.</p></div>
-                        <div data-element="fields" data-stacked="false" class="seva-fields formkit-fields" style="display: flex; flex-direction: row; gap: 8px; margin: 0; width: 100%;">
-                            <div class="formkit-field" style="flex: 1 1 auto; width: 100%; min-width: 0; margin: 0;"><input class="formkit-input" name="email_address" aria-label="Email Address" placeholder="Enter your email" required="" type="email" style="color: rgb(244, 244, 245); background-color: rgb(18, 18, 20); border-color: rgb(39, 39, 42); border-radius: 8px; font-weight: 400; height: 42px; width: 100%; padding: 0 14px;"></div>
-                            <button data-element="submit" class="formkit-submit formkit-submit" style="color: rgb(9, 9, 11); background-color: rgb(245, 158, 11); border-radius: 8px; font-weight: 700; height: 42px; padding: 0 20px; margin: 0; white-space: nowrap; flex-shrink: 0;">Subscribe</button>
+                        <p class="text-zinc-400 text-sm sm:text-base leading-relaxed mb-5">
+                            Modular Maya rigging suite and data-driven Kaiju Builder with versioned JSON rig datatypes, automated publish QC checks, and modular guide tools.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-7">
+                            <span class="font-mono text-[11px] px-2.5 py-1 rounded bg-white/[0.04] border border-white/10 text-zinc-300">Maya 2025+</span>
+                            <span class="font-mono text-[11px] px-2.5 py-1 rounded bg-white/[0.04] border border-white/10 text-zinc-300">Python</span>
+                            <span class="font-mono text-[11px] px-2.5 py-1 rounded bg-white/[0.04] border border-white/10 text-zinc-300">PySide6</span>
                         </div>
                     </div>
-                </form>
+                    <div class="pt-5 border-t border-white/10 flex items-center justify-between">
+                        <a href="https://github.com/kaijuvfx/kaiju_suite" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold text-sm px-5 py-2.5 rounded-lg transition-colors">
+                            View on GitHub &rarr;
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Tool 2: Kaiju Flow (Coming Soon) -->
+                <article class="studio-card rounded-2xl p-7 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-start justify-between gap-4 mb-4">
+                            <h3 class="font-display text-2xl font-bold text-zinc-100">Kaiju Flow</h3>
+                            <span class="font-mono text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-300 border border-amber-500/25 shrink-0">
+                                COMING SOON
+                            </span>
+                        </div>
+                        <p class="text-zinc-400 text-sm sm:text-base leading-relaxed mb-5">
+                            Standalone multi-DCC creature pipeline app managing assets, shots, pure-Python OpenUSD shot assembly, and layered Unreal Engine 5 Sequencer takes.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-7">
+                            <span class="font-mono text-[11px] px-2.5 py-1 rounded bg-white/[0.04] border border-white/10 text-zinc-300">Maya</span>
+                            <span class="font-mono text-[11px] px-2.5 py-1 rounded bg-white/[0.04] border border-white/10 text-zinc-300">Houdini</span>
+                            <span class="font-mono text-[11px] px-2.5 py-1 rounded bg-white/[0.04] border border-white/10 text-zinc-300">OpenUSD</span>
+                            <span class="font-mono text-[11px] px-2.5 py-1 rounded bg-white/[0.04] border border-white/10 text-zinc-300">UE 5.8</span>
+                        </div>
+                    </div>
+                    <div class="pt-5 border-t border-white/10 flex items-center justify-between">
+                        <a href="https://www.youtube.com/@kaiju_vfx" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-sm font-semibold text-zinc-300 hover:text-amber-400 transition-colors">
+                            Follow on YouTube &rarr;
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Tool 3: Kaiju KitScape (Coming Soon) -->
+                <article class="studio-card rounded-2xl p-7 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-start justify-between gap-4 mb-4">
+                            <h3 class="font-display text-2xl font-bold text-zinc-100">Kaiju KitScape</h3>
+                            <span class="font-mono text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-300 border border-amber-500/25 shrink-0">
+                                COMING SOON
+                            </span>
+                        </div>
+                        <p class="text-zinc-400 text-sm sm:text-base leading-relaxed mb-5">
+                            Closed-loop GenAI and kitbash environment suite bridging Unreal Engine 5 remote automation, asset pack catalogs, and local ComfyUI into playable levels and DCC collision proxies.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-7">
+                            <span class="font-mono text-[11px] px-2.5 py-1 rounded bg-white/[0.04] border border-white/10 text-zinc-300">Unreal Engine 5</span>
+                            <span class="font-mono text-[11px] px-2.5 py-1 rounded bg-white/[0.04] border border-white/10 text-zinc-300">ComfyUI</span>
+                            <span class="font-mono text-[11px] px-2.5 py-1 rounded bg-white/[0.04] border border-white/10 text-zinc-300">MCP</span>
+                            <span class="font-mono text-[11px] px-2.5 py-1 rounded bg-white/[0.04] border border-white/10 text-zinc-300">Megascans</span>
+                        </div>
+                    </div>
+                    <div class="pt-5 border-t border-white/10 flex items-center justify-between">
+                        <a href="https://www.youtube.com/@kaiju_vfx" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-sm font-semibold text-zinc-300 hover:text-amber-400 transition-colors">
+                            Follow on YouTube &rarr;
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Tool 4: Kaiju RV3D (Coming Soon) -->
+                <article class="studio-card rounded-2xl p-7 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-start justify-between gap-4 mb-4">
+                            <h3 class="font-display text-2xl font-bold text-zinc-100">Kaiju RV3D</h3>
+                            <span class="font-mono text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-300 border border-amber-500/25 shrink-0">
+                                COMING SOON
+                            </span>
+                        </div>
+                        <p class="text-zinc-400 text-sm sm:text-base leading-relaxed mb-5">
+                            Lightweight &ldquo;RV, but in 3D&rdquo; cache reviewer for synchronized Alembic and USD playback with instant hotkey solo flipping across Anim, Muscle, Cloth, and Lookdev caches.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-7">
+                            <span class="font-mono text-[11px] px-2.5 py-1 rounded bg-white/[0.04] border border-white/10 text-zinc-300">OpenUSD Hydra</span>
+                            <span class="font-mono text-[11px] px-2.5 py-1 rounded bg-white/[0.04] border border-white/10 text-zinc-300">Alembic</span>
+                            <span class="font-mono text-[11px] px-2.5 py-1 rounded bg-white/[0.04] border border-white/10 text-zinc-300">PySide6</span>
+                        </div>
+                    </div>
+                    <div class="pt-5 border-t border-white/10 flex items-center justify-between">
+                        <a href="https://www.youtube.com/@kaiju_vfx" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-sm font-semibold text-zinc-300 hover:text-amber-400 transition-colors">
+                            Follow on YouTube &rarr;
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- YouTube Content Pillars -->
+    <section id="youtube" class="py-20 sm:py-24 px-5 sm:px-8 max-w-7xl mx-auto">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
+            <div>
+                <span class="font-mono text-xs uppercase tracking-widest text-amber-400">03 // YouTube Channel</span>
+                <h2 class="font-display text-3xl sm:text-4xl font-bold text-zinc-100 mt-2">Showcases, Tutorials &amp; BTS</h2>
+            </div>
+            <a href="https://www.youtube.com/@kaiju_vfx" target="_blank" rel="noopener noreferrer" class="font-mono text-xs uppercase tracking-wider text-amber-400 hover:text-amber-300 transition-colors shrink-0 whitespace-nowrap">
+                youtube.com/@kaiju_vfx &rarr;
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="studio-card rounded-2xl p-7">
+                <div class="font-mono text-xs text-amber-400 tracking-widest uppercase mb-3">01 / Showcases</div>
+                <h3 class="font-display text-xl font-bold text-zinc-100 mb-3">Hero Shots &amp; Technical Studies</h3>
+                <p class="text-sm text-zinc-400 leading-relaxed">
+                    Finished creature shots, anatomy studies, and full-sequence tests pushed through real production lighting, CFX, and lookdev &mdash; proving every tool against final pixels.
+                </p>
+            </div>
+
+            <div class="studio-card rounded-2xl p-7">
+                <div class="font-mono text-xs text-amber-400 tracking-widest uppercase mb-3">02 / Tutorials</div>
+                <h3 class="font-display text-xl font-bold text-zinc-100 mb-3">Production Workflows &amp; Tools</h3>
+                <p class="text-sm text-zinc-400 leading-relaxed">
+                    Senior creature rigging, CFX, and OpenUSD pipeline walkthroughs focused on why setups fail at shot scale and how to automate repeatable craft into tools.
+                </p>
+            </div>
+
+            <div class="studio-card rounded-2xl p-7">
+                <div class="font-mono text-xs text-red-400 tracking-widest uppercase mb-3">03 / Behind the Scenes</div>
+                <h3 class="font-display text-xl font-bold text-zinc-100 mb-3">Build-in-Public Pipeline Devlogs</h3>
+                <p class="text-sm text-zinc-400 leading-relaxed">
+                    Unfiltered logs turning real solo-studio bottlenecks into reusable software, multi-DCC bridges, and AI/agentic TD setups as each project ships.
+                </p>
             </div>
         </div>
 
+        <div class="studio-card rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 border-amber-500/20">
+            <div>
+                <h3 class="font-display text-lg sm:text-xl font-bold text-zinc-100">Watch Solo Creature VFX unfold on YouTube</h3>
+                <p class="text-sm text-zinc-400 mt-1">New creature studies, open-source tool releases, and behind-the-scenes pipeline logs.</p>
+            </div>
+            <a href="https://www.youtube.com/@kaiju_vfx" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2.5 bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold px-6 py-3 rounded-xl transition-colors shrink-0">
+                Subscribe on YouTube &rarr;
+            </a>
+        </div>
     </section>
 
-    <!-- Footer with Social Links -->
-    <footer class="border-t border-zinc-800/80 py-12 px-6 text-center text-zinc-500 text-sm">
-        <div class="flex justify-center space-x-6 mb-6 font-medium text-zinc-400">
-            <a href="https://www.artstation.com/kaijuvfx" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-500 transition-colors">ArtStation</a>
-            <a href="https://www.instagram.com/kaiju_vfx/" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-500 transition-colors">Instagram</a>
-            <a href="https://kaijuvfx.gumroad.com/" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-500 transition-colors">Gumroad Store</a>
-            <a href="https://x.com/kaiju_vfx" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-500 transition-colors">X (Twitter)</a>
-            <a href="https://www.youtube.com/@kaiju_vfx" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-500 transition-colors">YouTube</a>
-            <a href="https://github.com/kaijuvfx" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-500 transition-colors">GitHub</a>
+    <!-- Footer -->
+    <footer class="border-t border-white/10 py-12 px-5 sm:px-8 text-zinc-500 text-sm">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <img src="logo/kaiju_v4.png" alt="KaijuVFX emblem" class="h-8 w-8 rounded-md bg-black border border-white/10 object-contain p-0.5">
+                <span class="font-display font-bold tracking-wider text-zinc-200">KAIJU<span class="text-amber-500">VFX</span></span>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 font-medium text-zinc-400">
+                <a href="https://www.youtube.com/@kaiju_vfx" target="_blank" rel="noopener noreferrer" class="hover:text-amber-400 transition-colors">YouTube</a>
+                <a href="https://github.com/kaijuvfx" target="_blank" rel="noopener noreferrer" class="hover:text-amber-400 transition-colors">GitHub</a>
+                <a href="https://www.artstation.com/kaijuvfx" target="_blank" rel="noopener noreferrer" class="hover:text-amber-400 transition-colors">ArtStation</a>
+                <a href="https://www.instagram.com/kaiju_vfx/" target="_blank" rel="noopener noreferrer" class="hover:text-amber-400 transition-colors">Instagram</a>
+                <a href="https://x.com/kaiju_vfx" target="_blank" rel="noopener noreferrer" class="hover:text-amber-400 transition-colors">X (Twitter)</a>
+                <a href="https://kaijuvfx.gumroad.com/" target="_blank" rel="noopener noreferrer" class="hover:text-amber-400 transition-colors">Gumroad</a>
+            </div>
+
+            <p class="text-zinc-500 text-xs">&copy; 2026 KaijuVFX. All rights reserved.</p>
         </div>
-        <p>&copy; 2026 Kaiju Alert. All rights reserved.</p>
     </footer>
 
 </body>
